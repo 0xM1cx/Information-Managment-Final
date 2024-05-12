@@ -27,7 +27,7 @@
   </style>
 </head>
 
-<body class="leading-normal tracking-normal text-indigo-400 m-6 bg-cover bg-fixed" style="background-image: url('../VIew/assets/header.png');">
+<body class="leading-normal tracking-normal text-indigo-400 m-6 bg-cover p-6 bg-fixed" style="background-image: url('../VIew/assets/header.png');">
   <div class="h-full">
     <!--Nav-->
     <div class="w-full container mx-auto">
@@ -60,7 +60,7 @@
           <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500">
             place to rest
           </span>
-          and take a break from life
+          and take a break from life 😉
         </h1>
         <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left">
 
@@ -92,7 +92,7 @@
     </div>
 
     <!-- ##### 2nd part of the page ##### -->
-    <?php '../VIew/roomCarousel.php' ?>
+    <?php require '../VIew/roomCarousel.php' ?>
 
     <!-- ##### 3rd part of the page ##### -->
     <?php require '../VIew/form.php'; ?>
