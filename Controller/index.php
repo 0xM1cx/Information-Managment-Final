@@ -95,8 +95,9 @@
     <?php require '../VIew/roomCarousel.php' ?>
 
     <!-- ##### 3rd part of the page ##### -->
-    <?php require '../VIew/form.php'; ?>
-
+    <?php // require '../VIew/form.php'; 
+    ?>
+    <?php require '../VIew/reserveRoom.php' ?>
 
     <!--Footer-->
     <div class="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">

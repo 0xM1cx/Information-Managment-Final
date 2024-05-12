@@ -1,0 +1,123 @@
+<?php
+
+$email = $password = $f_name = $l_name = $company = $phone = "";
+$passError = null;
+
+if (isset($_POST['submit'])) {
+    $f_name = filter_input(INPUT_POST, 'floating_first_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $l_name = filter_input(INPUT_POST, 'floating_last_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $email = filter_input(INPUT_POST, 'floating_email', FILTER_SANITIZE_EMAIL);
+    $phone = filter_input(INPUT_POST, 'floating_phone', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $company = filter_input(INPUT_POST, 'floating_company', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $repeat_pass = filter_input(INPUT_POST, 'floating_repeat_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $_password = filter_input(INPUT_POST, 'floating_password', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+    $sql = "INSERT INTO customers (f_name, l_name, email, pass, phone, company) VALUES ('$f_name', '$l_name', '$email', '$_password', '$phone', '$company');";
+
+    if ($password === $repeat_pass) {
+        if (mysqli_query($conn, $sql)) {
+            header("Location: index.php");
+        } else {
+            echo "ERROR: Did not insert into database" . mysqli_error($conn);
+        }
+    } else {
+        $passError = "Password does not match";
+    }
+}
+
+?>
+
+
+
+<section class="bg-transparent py-8 antialiased dark:bg-gray-900 md:py-16">
+    <h1 class="text-4xl">Reserve a Room</h1>
+    <br>
+    <br>
+    <br>
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
+            <div class="min-w-0 flex-1 space-y-8">
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="f_name" class="mb-2 block text-sm font-medium text-[#07074D]"> First Name* </label>
+                            <input type="text" id="f_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Shawn Michael" required />
+                        </div>
+
+                        <div>
+                            <label for="l_name" class="mb-2 block text-sm font-medium text-[#07074D]"> Last Name* </label>
+                            <input type="text" id="l_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Sudaria" required />
+                        </div>
+
+                        <div>
+                            <div>
+                                <label for="address" class="mb-2 block text-sm font-medium text-[#07074D]"> Address* </label>
+                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="address" id="address" placeholder="Sta. Crus St, Brgy 44, Tacloban City, Philippines" required>
+                            </div>
+
+                        </div>
+                        <div>
+                            <div>
+                                <label for="phone" class="mb-2 block text-sm font-medium text-[#07074D]"> Contact Number* </label>
+                                <input pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="tel" name="phone" id="phone" placeholder="123-456-7890" required>
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <label for="phone-input-3" class="mb-2 block text-sm font-medium text-[#07074D]"> Phone Number* </label>
+                            <div class="flex items-center">
+                                <div class="relative w-full">
+                                    <input type="text" id="phone-input" class="focus:ring transform transition hover:scale-105 duration-300 ease-in-out z-20 block w-full rounded-lg border border-s-0 border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:border-s-gray-700  dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="F_Name" class="mb-2 block text-sm font-medium text-[#07074D]"> First Name </label>
+                            <input type="text" id="F_Name" class="focus:ring transform transition hover:scale-105 duration-300 ease-in-out block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="name@flowbite.com" required />
+                        </div>
+
+                        <div>
+                            <label for="company_name" class="mb-2 block text-sm font-medium text-[#07074D]"> Company name </label>
+                            <input type="text" id="company_name" class="focus:ring transform transition hover:scale-105 duration-300 ease-in-out block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Flowbite LLC" required />
+                        </div>
+                        <div>
+                            <label for="vat_number" class="mb-2 block text-sm font-medium text-[#07074D]"> VAT number </label>
+                            <input type="text" id="vat_number" class="focus:ring transform transition hover:scale-105 duration-300 ease-in-out block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="DE42313253" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h3 class="text-xl font-semibold text-[#07074D]">Payment</h3>
+                </div>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                        <div class="rounded-lg bg-transparent p-4 ps-4">
+                        </div>
+                        <div class="rounded-lg bg-transparent p-4 ps-4">
+                        </div>
+                        <div class="rounded-lg bg-transparent p-4 ps-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
+                <div class="flow-root">
+                    <div class="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
+                        <dl class="flex items-center justify-between gap-4 py-3">
+                            <dt class="text-base font-normal text-[#07074D] dark:text-gray-400">Subtotal</dt>
+                            <dd class="text-base font-medium text-green-500">$8,094.00</dd>
+                        </dl>
+                        <dl class="flex items-center justify-between gap-4 py-3">
+                            <dt class="text-base font-bold text-[#07074D]">Total</dt>
+                            <dd class="text-base font-bold text-green-500">$8,392.00</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <button type="submit" class="focus:ring transform transition hover:scale-105 duration-300 ease-in-out font-bold py-2 px-4 bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4  focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Proceed to Payment</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>

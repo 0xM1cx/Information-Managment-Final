@@ -40,10 +40,6 @@ if (isset($_POST['submit'])) {
         <br>
         <br>
         <br>
-        <!-- <form class="max-w-md mx-auto w-full" method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-            
-        </form> -->
-
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full max-w-[550px]">
                 <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
@@ -123,9 +119,9 @@ if (isset($_POST['submit'])) {
                                 <label style="color:transparent;" for="" class=" mb-3 block text-base font-medium">
                                     Room
                                 </label>
-                                <button onclick="window.location.href = './pickRoom.php'" class=" bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out" type="button">
-                                    Pick a room
-                                </button>
+                                <a class="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out" href="../VIew/pickRoom.php">
+                                    Pick a Room
+                                </a>
                             </div>
                         </div>
                     </div>
