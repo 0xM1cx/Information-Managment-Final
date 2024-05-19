@@ -1,7 +1,3 @@
-<?php
-$currentTime = date('l, F jS Y h:i:s A');
-?>
-
 <section class="bg-transparent py-8 antialiased dark:bg-gray-900 md:py-16">
     <h1 class="text-4xl">Reserve a Room</h1>
     <br>
@@ -15,7 +11,8 @@ $currentTime = date('l, F jS Y h:i:s A');
                         <div class="mt-3">
                             <a href="../VIew/pickRoom.php" class="focus:ring transform transition hover:scale-105 duration-300 ease-in-out font-bold py-2 px-4 bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 mb-3 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Pick a Room</a>
                         </div>
-                        <div></div>
+                        <div>
+                        </div>
                         <div>
                             <label for="f_name" class="mb-2 block text-sm font-medium text-[#07074D]"> First Name* </label>
                             <input name="f_name" type="text" id="f_name" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" placeholder="Shawn Michael" required />
