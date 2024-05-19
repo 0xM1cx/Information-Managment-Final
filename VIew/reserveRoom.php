@@ -1,18 +1,5 @@
 <?php
 $currentTime = date('l, F jS Y h:i:s A');
-$email = $password = $f_name = $l_name = $company = $phone = "";
-$passError = null;
-
-if (isset($_POST['submit'])) {
-    $f_name = filter_input(INPUT_POST, 'f_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $l_name = filter_input(INPUT_POST, 'l_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $email = filter_input(INPUT_POST, 'floating_email', FILTER_SANITIZE_EMAIL);
-    $phone = filter_input(INPUT_POST, 'floating_phone', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-    $company = filter_input(INPUT_POST, 'floating_company', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-    $sql = "INSERT INTO customers (f_name, l_name, email, pass, phone, company) VALUES ('$f_name', '$l_name', '$email', '$_password', '$phone', '$company');";
-}
-
 ?>
 
 <section class="bg-transparent py-8 antialiased dark:bg-gray-900 md:py-16">
