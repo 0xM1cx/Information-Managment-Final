@@ -1,4 +1,5 @@
 <?php
+$currentTime = date('l, F jS Y h:i:s A');
 $email = $password = $f_name = $l_name = $company = $phone = "";
 $passError = null;
 
@@ -95,10 +96,22 @@ if (isset($_POST['submit'])) {
                 <div class="space-y-4">
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
                         <div class="rounded-lg bg-transparent p-4 ps-4">
+                            <div>
+                                <label for="amount" class="mb-2 block text-sm font-medium text-[#07074D]"> Amount to pay* </label>
+                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="amount" id="amount" placeholder="₱ <?php echo $Roomprice ?>" required readonly>
+                            </div>
                         </div>
                         <div class="rounded-lg bg-transparent p-4 ps-4">
+                            <div>
+                                <label for="payment_date" class="mb-2 block text-sm font-medium text-[#07074D]"> Payment Date* </label>
+                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="payment_date" id="payment_date" placeholder="<?php echo $currentTime ?>" required readonly>
+                            </div>
                         </div>
                         <div class="rounded-lg bg-transparent p-4 ps-4">
+                            <div>
+                                <label for="card_number" class="mb-2 block text-sm font-medium text-[#07074D]"> Card Number* </label>
+                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="card_number" id="card_number" placeholder="1234 xxxx xxxx xxxx" required readonly>
+                            </div>
                         </div>
                     </div>
                 </div>
