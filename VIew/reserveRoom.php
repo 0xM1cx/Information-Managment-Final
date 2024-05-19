@@ -7,7 +7,7 @@ $currentTime = date('l, F jS Y h:i:s A');
     <br>
     <br>
     <br>
-    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+    <form action="../Model/processReservation.php" method="POST" class="mx-auto max-w-screen-xl px-4 2xl:px-0">
         <div class="mt-6 sm:mt-8 lg:flex lg:items-start lg:gap-12 xl:gap-16">
             <div class="min-w-0 flex-1 space-y-8">
                 <div class="space-y-4">
@@ -56,14 +56,15 @@ $currentTime = date('l, F jS Y h:i:s A');
                                     $Roomtype = "No room picked yet";
                                     $Roomcapacity = "";
                                     $Roomprice = 0.00;
+                                    $room_id = "";
                                 }
                                 ?>
                                 <label for="room" class="mb-2 block text-sm font-medium text-[#07074D]"> Room Picked </label>
-                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm placeholder-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="room" id="room" placeholder="<?php echo $Roomtype . $Roomcapacity ?>" disabled required>
+                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm placeholder-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="fake" id="fake" placeholder="<?php echo $Roomtype . $Roomcapacity ?>" readonly required>
+                                <input type="hidden" name="room" id="room" value="<?php echo $room_id ?>">
                             </div>
                         </div>
                         <div>
-
                             <div class="flex flex-col">
                                 <label for="checkindate" class="text-stone-600 text-sm font-medium">Check In Date</label>
                                 <input type="date" name="checkindate" id="checkindate" class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
@@ -85,19 +86,19 @@ $currentTime = date('l, F jS Y h:i:s A');
                         <div class="rounded-lg bg-transparent p-4 ps-4">
                             <div>
                                 <label for="amount" class="mb-2 block text-sm font-medium text-[#07074D]"> Amount to pay* </label>
-                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="amount" id="amount" placeholder="₱ <?php echo $Roomprice ?>" required readonly>
+                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="amount" id="amount" placeholder="₱ <?php echo $Roomprice ?>" value="<?php echo $Roomprice ?>" required readonly>
                             </div>
                         </div>
                         <div class="rounded-lg bg-transparent p-4 ps-4">
                             <div>
                                 <label for="payment_date" class="mb-2 block text-sm font-medium text-[#07074D]"> Payment Date* </label>
-                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="payment_date" id="payment_date" placeholder="<?php echo $currentTime ?>" required readonly>
+                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="payment_date" id="payment_date" placeholder="<?php echo $currentTime ?>" value="<?php echo $currentTime ?>" required readonly>
                             </div>
                         </div>
                         <div class="rounded-lg bg-transparent p-4 ps-4">
                             <div>
                                 <label for="card_number" class="mb-2 block text-sm font-medium text-[#07074D]"> Card Number* </label>
-                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="card_number" id="card_number" placeholder="1234 xxxx xxxx xxxx" required readonly>
+                                <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="card_number" id="card_number" placeholder="1234 xxxx xxxx xxxx" required>
                             </div>
                         </div>
                     </div>
