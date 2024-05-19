@@ -48,9 +48,6 @@ if (!empty($checkindate) && !empty($checkoutdate)) {
             )";
 }
 
-echo $checkindate . "\n";
-echo $checkoutdate . "\n";
-echo $pricerange;
 $res = mysqli_query($conn, $sql);
 ?>
 <!DOCTYPE html>
@@ -155,7 +152,7 @@ $res = mysqli_query($conn, $sql);
                 ?>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="p-4">
-                            <img src="../VIew/rooms pics/<?php echo $row['Pic_Name']; ?>" class="w-16 md:w-32 max-w-full max-h-full" alt="Apple Watch">
+                            <img src="<?php echo $row['Pic_Name']; ?>" class="w-16 md:w-32 max-w-full max-h-full" alt="Apple Watch">
                         </td>
                         <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                             <input type="text" name="type" placeholder="<?php echo $row['Type']; ?>">
@@ -170,7 +167,9 @@ $res = mysqli_query($conn, $sql);
                             <input name="price" type="text" disabled placeholder="<?php echo $row['Price']; ?>">
                         </td>
                         <td>
-                            <button type="sumbit" class="text-white bg-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Book</button>
+                            <button class="text-white bg-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                                <a href="../Controller/index.php?room=<?php echo $row['Room_Id']; ?>">book</a>
+                            </button>
                         </td>
                     </tr>
                 <?php } ?>

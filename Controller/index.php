@@ -92,7 +92,8 @@
     </div>
 
     <!-- ##### 2nd part of the page ##### -->
-    <?php require '../VIew/roomCarousel.php' ?>
+    <?php require '../VIew/roomCarousel.php';
+    ?>
 
     <!-- ##### 3rd part of the page ##### -->
     <?php // require '../VIew/form.php'; 
