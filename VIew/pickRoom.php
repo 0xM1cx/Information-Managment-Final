@@ -1,7 +1,7 @@
 <?php require '../Model/database.php' ?>
 
 <?php
-
+session_start();
 $drop_amenities = array("Wifi", "TV", "Aircon", "Desk", "Drinks");
 
 $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_FULL_SPECIAL_CHARS) ?: '';
@@ -37,15 +37,18 @@ if (!empty($selectedAmenities)) {
 
 
 if (!empty($checkindate) && !empty($checkoutdate)) {
-    // Exclude rooms that have booked dates on the selected range
-    $sql .= " AND NOT EXISTS (
-                SELECT * FROM rooms 
-                WHERE (
-                    (CheckInDate <= '$checkindate' AND CheckOutDate >= '$checkindate')
-                    OR (CheckInDate <= '$checkoutdate' AND CheckOutDate >= '$checkoutdate')
-                    OR (CheckInDate >= '$checkindate' AND CheckOutDate <= '$checkoutdate')
-                )
-            )";
+
+    $sql .= " AND (
+             (CheckInDate IS NOT NULL AND CheckOutDate IS NOT NULL AND NOT EXISTS (  -- pag check hin non-null dates and no overlap
+               SELECT * FROM rooms 
+               WHERE (
+                 (CheckInDate <= '$checkindate' AND CheckOutDate >= '$checkindate')
+                 OR (CheckInDate <= '$checkoutdate' AND CheckOutDate >= '$checkoutdate')
+                 OR (CheckInDate >= '$checkindate' AND CheckOutDate <= '$checkoutdate')
+               )
+             ))
+             OR (CheckInDate IS NULL AND CheckOutDate IS NULL) 
+           )";
 }
 
 $res = mysqli_query($conn, $sql);
@@ -168,7 +171,7 @@ $res = mysqli_query($conn, $sql);
                         </td>
                         <td>
                             <button class="text-white bg-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                                <a href="../Controller/index.php?room=<?php echo $row['Room_Id']; ?>">book</a>
+                                <a href="../Controller/index.php?room=<?php echo $row['Room_Id']; ?>&cid=<?php echo $checkindate ?>&cod=<?php echo $checkoutdate ?>">book</a>
                             </button>
                         </td>
                     </tr>

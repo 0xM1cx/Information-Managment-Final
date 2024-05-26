@@ -2,16 +2,7 @@
 require "./database.php";
 $currentDateTime = date('Y-m-d H:i:s');
 $fname = $lname = $address = $phone = $room = $checkindate = $checkoutdate = $amount = $payment_date = $card_number = "";
-// echo "<h2> {$_POST['f_name']} </h2>";
-// echo "<h2> {$_POST['l_name']} </h2>";
-// echo "<h2> {$_POST['address']} </h2>";
-// echo "<h2> {$_POST['phone']} </h2>";
-// echo "<h2> {$_POST['room']} </h2>";
-// echo "<h2> {$_POST['checkindate']} </h2>";
-// echo "<h2> {$_POST['checkoutdate']} </h2>";
-// echo "<h2> {$_POST['amount']} </h2>";
-// echo "<h2> {$_POST['payment_date']} </h2>";
-// echo "<h2> {$_POST['card_number']} </h2>";
+
 
 
 
@@ -48,27 +39,27 @@ function insertPayment($conn, $amount, $payment_date, $card_number)
 }
 
 
-function insertDateToRoom($conn, $checkindate, $checkoutdate, $roomid)
+// function insertDateToRoom($conn, $checkindate, $checkoutdate, $roomid)
+// {
+//     $sql = "UPDATE rooms SET CheckInDate = ?, CheckOutDate = ? WHERE Room_Id = ?;";
+//     $stmt_DTR = mysqli_prepare($conn, $sql);
+//     mysqli_stmt_bind_param($stmt_DTR, "ssi", $checkindate, $checkoutdate, $roomid);
+//     $DTR_result = mysqli_stmt_execute($stmt_DTR);
+
+//     if ($DTR_result) {
+//         $DTR_id = mysqli_stmt_insert_id($stmt_DTR);
+//     } else {
+//         echo "<h1>Error in inserting date to the room table</h1>";
+//     }
+
+//     return $DTR_id;
+// }
+
+function insertReservation($conn, $custid, $roomid, $payid, $checkindate, $checkoutdate)
 {
-    $sql = "UPDATE rooms SET CheckInDate = ?, CheckOutDate = ? WHERE Room_Id = ?;";
-    $stmt_DTR = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt_DTR, "ssi", $checkindate, $checkoutdate, $roomid);
-    $DTR_result = mysqli_stmt_execute($stmt_DTR);
-
-    if ($DTR_result) {
-        $DTR_id = mysqli_stmt_insert_id($stmt_DTR);
-    } else {
-        echo "<h1>Error in inserting date to the room table</h1>";
-    }
-
-    return $DTR_id;
-}
-
-function insertReservation($conn, $custid, $roomid, $payid)
-{
-    $sql = "INSERT INTO reservation (Customer_ID, Room_ID, Payment_ID) VALUES (?, ?, ?);";
+    $sql = "INSERT INTO reservation (Customer_ID, Room_ID, Payment_ID, CheckInDate, CheckOutDate) VALUES (?, ?, ?, ?, ?);";
     $stmt_res = mysqli_prepare($conn, $sql);
-    mysqli_stmt_bind_param($stmt_res, "iii", $custid, $roomid, $payid);
+    mysqli_stmt_bind_param($stmt_res, "iiiss", $custid, $roomid, $payid, $checkindate, $checkoutdate);
     $resvervation_result = mysqli_stmt_execute($stmt_res);
 
     if ($resvervation_result) {
@@ -96,8 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         // Insert into the customer table
         $new_cust_id = insertCustomer($conn, $fname, $lname, $address, $phone);
         $new_payment_id = insertPayment($conn, $amount, $currentDateTime, $card_number);
-        insertDateToRoom($conn, $checkindate, $checkoutdate, $room);
-        $new_res_id = insertReservation($conn, $new_cust_id, $room, $new_payment_id);
+        // insertDateToRoom($conn, $checkindate, $checkoutdate, $room);
+        $new_res_id = insertReservation($conn, $new_cust_id, $room, $new_payment_id, $checkindate, $checkoutdate);
         header("Location: ../Controller/index.php");
     } else {
         echo "<h1>Error: there are variables with no values</h1>";

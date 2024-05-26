@@ -1,3 +1,8 @@
+<!-- 
+TODO
+1. Add button to go back to the index.php from the pickRoom page
+
+ -->
 <section class="bg-transparent py-8 antialiased dark:bg-gray-900 md:py-16">
     <h1 class="text-4xl">Reserve a Room</h1>
     <br>
@@ -38,6 +43,7 @@
                         <div>
                             <div>
                                 <?php
+                                $currentTime = date('m/d/Y H:i:s');
                                 if (!empty($_GET['room'])) {
                                     $room_id = $_GET['room'];
                                     $sql = "SELECT Type, Room_Capacity, Price FROM rooms WHERE Room_Id = ?";
@@ -55,6 +61,22 @@
                                     $Roomprice = 0.00;
                                     $room_id = "";
                                 }
+                                // $cid = $_GET['cid'];
+                                // $cod = $_GET['cod'];
+                                // echo "<h1>{$cid}</h1>";
+                                // echo "<h1>{$cod}</h1>";
+                                if (isset($_GET['cid']) && isset($_GET['cod'])) {
+                                    $cid = $_GET['cid'];
+                                    $cod = $_GET['cod'];
+                                } else {
+                                    $cid = date('m/d/Y');
+                                    $cod = date('m/d/Y');
+                                }
+                                // if (!empty($_GET['cid']) && !empty($_GET('cod'))) {
+                                // } else {
+                                //     $cid = date('m/d/Y');
+                                //     $cod = date('m/d/Y');
+                                // }
                                 ?>
                                 <label for="room" class="mb-2 block text-sm font-medium text-[#07074D]"> Room Picked </label>
                                 <input class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm placeholder-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" type="text" name="fake" id="fake" placeholder="<?php echo $Roomtype . $Roomcapacity ?>" readonly required>
@@ -64,11 +86,11 @@
                         <div>
                             <div class="flex flex-col">
                                 <label for="checkindate" class="text-stone-600 text-sm font-medium">Check In Date</label>
-                                <input type="date" name="checkindate" id="checkindate" class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                <input type="date" value="<?php echo $cid; ?>" name="checkindate" id="checkindate" class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                             </div>
                             <div class="flex flex-col">
                                 <label for="checkoutdate" class="text-stone-600 text-sm font-medium">Check Out Date</label>
-                                <input type="date" name="checkoutdate" id="checkoutdate" class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
+                                <input type="date" value="<?php echo $cod; ?>" name="checkoutdate" id="checkoutdate" class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" />
                             </div>
 
                         </div>
