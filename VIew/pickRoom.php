@@ -11,7 +11,26 @@ $checkindate = isset($_POST['checkindate']) ? $_POST['checkindate'] : '';
 $checkoutdate = isset($_POST['checkoutdate']) ? $_POST['checkoutdate'] : '';
 $pricerange = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-$sql = "SELECT * from rooms WHERE 1=1";
+// $sql = "SELECT Type, Room_Capacity, Price, Amenities, r.CheckInDate AS rooms_CID, r.CheckOutDate AS rooms_COD, Pic_Name, res.CheckInDate AS res_CID, res.CheckOutDate AS res_COD FROM rooms r, reservation res WHERE 1=1 AND r.Room_Id = res.Room_ID";
+$sql = "SELECT
+            r.Room_Id AS r_Room_Id,
+            Type, 
+            Room_Capacity, 
+            Price, 
+            Amenities, 
+            r.CheckInDate AS rooms_CID, 
+            r.CheckOutDate AS rooms_COD, 
+            Pic_Name, 
+            res.CheckInDate AS res_CID, 
+            res.CheckOutDate AS res_COD 
+        FROM 
+            rooms r 
+        LEFT JOIN 
+            reservation res 
+        ON 
+            r.Room_Id = res.Room_ID 
+        WHERE 
+            1=1";
 
 if (!empty($type)) {
     $sql .= " AND Type = '$type'";
@@ -36,19 +55,48 @@ if (!empty($selectedAmenities)) {
 }
 
 
-if (!empty($checkindate) && !empty($checkoutdate)) {
+// if (!empty($checkindate) && !empty($checkoutdate)) {
 
-    $sql .= " AND (
-             (CheckInDate IS NOT NULL AND CheckOutDate IS NOT NULL AND NOT EXISTS (  -- pag check hin non-null dates and no overlap
-               SELECT * FROM rooms 
-               WHERE (
-                 (CheckInDate <= '$checkindate' AND CheckOutDate >= '$checkindate')
-                 OR (CheckInDate <= '$checkoutdate' AND CheckOutDate >= '$checkoutdate')
-                 OR (CheckInDate >= '$checkindate' AND CheckOutDate <= '$checkoutdate')
-               )
-             ))
-             OR (CheckInDate IS NULL AND CheckOutDate IS NULL) 
-           )";
+//     $sql .= " AND (
+//              (CheckInDate IS NOT NULL AND CheckOutDate IS NOT NULL AND NOT EXISTS (  -- pag check hin non-null dates and no overlap
+//                SELECT * FROM rooms 
+//                WHERE (
+//                  (CheckInDate <= '$checkindate' AND CheckOutDate >= '$checkindate')
+//                  OR (CheckInDate <= '$checkoutdate' AND CheckOutDate >= '$checkoutdate')
+//                  OR (CheckInDate >= '$checkindate' AND CheckOutDate <= '$checkoutdate')
+//                )
+//              ))
+//              OR (CheckInDate IS NULL AND CheckOutDate IS NULL) 
+//            )";
+// }
+
+if (!empty($checkindate) && !empty($checkoutdate)) {
+    $sql .= " AND r.Room_Id NOT IN (
+                SELECT res.Room_ID 
+                FROM reservation res 
+                WHERE 
+                    ('$checkindate' BETWEEN res.CheckInDate AND res.CheckOutDate)
+                    OR ('$checkoutdate' BETWEEN res.CheckInDate AND res.CheckOutDate)
+                    OR (res.CheckInDate BETWEEN '$checkindate' AND '$checkoutdate')
+                    OR (res.CheckOutDate BETWEEN '$checkindate' AND '$checkoutdate')
+              )
+              AND r.Room_Id NOT IN (
+                SELECT r1.Room_Id 
+                FROM rooms r1 
+                WHERE 
+                    ('$checkindate' BETWEEN r1.CheckInDate AND r1.CheckOutDate)
+                    OR ('$checkoutdate' BETWEEN r1.CheckInDate AND r1.CheckOutDate)
+                    OR (r1.CheckInDate BETWEEN '$checkindate' AND '$checkoutdate')
+                    OR (r1.CheckOutDate BETWEEN '$checkindate' AND '$checkoutdate')
+              )";
+}
+
+if (!empty($pricerange)) {
+    if ($pricerange == 'Lowest to Highest') {
+        $sql .= " ORDER BY Price ASC";
+    } elseif ($pricerange == 'Highest to Lowest') {
+        $sql .= " ORDER BY Price DESC";
+    }
 }
 
 $res = mysqli_query($conn, $sql);
@@ -67,6 +115,7 @@ $res = mysqli_query($conn, $sql);
 
 <body class="leading-normal tracking-normal text-indigo-400 m-6 mx-40 bg-cover p-6 bg-fixed" style="background-image: url('../VIew/assets/header.png');">
     <h1 class="text-4xl">Pick a Room</h1>
+    <a href="../Controller/index.php" class="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Go Back</a>
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
         <div class="m-2">
             <div class="rounded-xl bg-transparent">
@@ -109,7 +158,7 @@ $res = mysqli_query($conn, $sql);
                         <label for="price" class="text-stone-600 text-sm font-medium">Price</label>
                         <select id="price" name="price" class="mt-2 block w-full rounded-md border border-gray-200 px-2 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                             <option value="" selected disabled></option>
-                            <option>Higest to Lowest</option>
+                            <option>Highest to Lowest</option>
                             <option>Lowest to Highest</option>
                         </select>
                     </div>
@@ -171,7 +220,7 @@ $res = mysqli_query($conn, $sql);
                         </td>
                         <td>
                             <button class="text-white bg-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                                <a href="../Controller/index.php?room=<?php echo $row['Room_Id']; ?>&cid=<?php echo $checkindate ?>&cod=<?php echo $checkoutdate ?>">book</a>
+                                <a href="../Controller/index.php?room=<?php echo $row['r_Room_Id']; ?>&cid=<?= $checkindate ?>&cod=<?= $checkoutdate ?>">book</a>
                             </button>
                         </td>
                     </tr>

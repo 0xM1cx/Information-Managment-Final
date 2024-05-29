@@ -66,7 +66,7 @@
 
         </p>
 
-        <form class="bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
+        <form class="hidden md:block lg:invisible bg-gray-900 opacity-75 w-full shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
           <div class="mb-4">
             <label class="block text-blue-300 py-2 font-bold mb-2" for="emailaddress">
               Signup for our newsletter
@@ -85,14 +85,14 @@
       <!--Right Col-->
       <!-- Change this to jade's face -->
       <div class="w-full xl:w-3/5 p-12 overflow-hidden">
-        <img class="mx-auto w-full md:w-4/5 transform -rotate-6 transition hover:scale-105 duration-700 ease-in-out hover:rotate-6" src="../VIew/assets/macbook.svg" />
+        <img class="mx-auto w-full md:w-4/5 transform -rotate-6 transition hover:scale-105 duration-700 ease-in-out hover:rotate-6" src="../VIew/assets/logo.png" />
       </div>
 
 
     </div>
 
     <!-- ##### 2nd part of the page ##### -->
-    <?php require '../VIew/roomCarousel.php';
+    <?php // require '../VIew/roomCarousel.php';
     ?>
 
     <!-- ##### 3rd part of the page ##### -->
