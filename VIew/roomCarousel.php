@@ -4,39 +4,82 @@
     $sql_res = mysqli_query($conn, $sql);
     ?>
 
- <head>
-     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
- </head>
+ <style>
+     .swiper-wrapper {
+         width: 100%;
+         height: max-content !important;
+         padding-bottom: 64px !important;
+         -webkit-transition-timing-function: linear !important;
+         transition-timing-function: linear !important;
+         position: relative;
+     }
 
+     .swiper-pagination-bullet {
+         background: #4f46e5;
+     }
+ </style>
 
-
- <div id="controls-carousel" class="relative w-full" data-carousel="static">
-     <!-- Carousel wrapper -->
-     <div class="relative h-56 rounded-lg md:h-96">
-         <?php while ($row = mysqli_fetch_assoc($sql_res)) : ?>
-             <div class="<?php echo $row['Pic_Name'] === 0 ? 'block' : 'hidden'; ?> duration-700 ease-in-out" data-carousel-item="<?php echo $row['Pic_Name'] === 0 ? 'active' : ''; ?>">
-                 <img src="<?php echo $row['Pic_Name']; ?>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Image <?php echo $row['Pic_Name'] + 1; ?>">
+ <div class="w-full relative">
+     <div class="swiper multiple-slide-carousel swiper-container relative">
+         <div class="swiper-wrapper mb-16">
+             <div class="swiper-slide">
+                 <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center">
+                     <span class="text-2xl font-semibold text-indigo-600">Slide 1 </span>
+                 </div>
              </div>
-         <?php endwhile; ?>
+             <div class="swiper-slide">
+                 <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center">
+                     <span class="text-2xl font-semibold text-indigo-600">Slide 2 </span>
+                 </div>
+             </div>
+             <div class="swiper-slide">
+                 <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center">
+                     <span class="text-2xl font-semibold text-indigo-600">Slide 3 </span>
+                 </div>
+             </div>
+             <div class="swiper-slide">
+                 <div class="bg-indigo-50 rounded-2xl h-96 flex justify-center items-center">
+                     <span class="text-2xl font-semibold text-indigo-600">Slide 4 </span>
+                 </div>
+             </div>
+         </div>
+         <div class="absolute flex justify-center items-center m-auto left-0 right-0 w-fit bottom-12">
+             <button id="slider-button-left" class="swiper-button-prev group !p-2 flex justify-center items-center border border-solid border-indigo-600 !w-12 !h-12 transition-all duration-500 rounded-full  hover:bg-indigo-600 !-translate-x-16" data-carousel-prev>
+                 <svg class="h-5 w-5 text-indigo-600 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                     <path d="M10.0002 11.9999L6 7.99971L10.0025 3.99719" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                 </svg>
+             </button>
+             <button id="slider-button-right" class="swiper-button-next group !p-2 flex justify-center items-center border border-solid border-indigo-600 !w-12 !h-12 transition-all duration-500 rounded-full hover:bg-indigo-600 !translate-x-16" data-carousel-next>
+                 <svg class="h-5 w-5 text-indigo-600 group-hover:text-white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                     <path d="M5.99984 4.00012L10 8.00029L5.99748 12.0028" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                 </svg>
+             </button>
+         </div>
      </div>
-     <!-- Slider controls -->
-     <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-             <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
-             </svg>
-             <span class="sr-only">Previous</span>
-         </span>
-     </button>
-     <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-             <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-             </svg>
-             <span class="sr-only">Next</span>
-         </span>
-     </button>
- </div>
 
- <!-- Add Tailwind CSS and any other necessary JavaScript here -->
- <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
+
+     <script>
+         var swiper = new Swiper(".multiple-slide-carousel", {
+             loop: true,
+             slidesPerView: 3,
+             spaceBetween: 20,
+             navigation: {
+                 nextEl: ".multiple-slide-carousel .swiper-button-next",
+                 prevEl: ".multiple-slide-carousel .swiper-button-prev",
+             },
+             breakpoints: {
+                 1920: {
+                     slidesPerView: 3,
+                     spaceBetween: 30
+                 },
+                 1028: {
+                     slidesPerView: 2,
+                     spaceBetween: 30
+                 },
+                 990: {
+                     slidesPerView: 1,
+                     spaceBetween: 0
+                 }
+             }
+         });
+     </script>

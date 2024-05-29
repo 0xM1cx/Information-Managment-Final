@@ -75,7 +75,7 @@ if (isset($_GET['status']) && $_GET['status'] == "Activated" && isset($_GET['toD
                         </td>
                         <td class="px-6 py-4 text-right">
                             <a href="../Model/activateRes.php?room=<?php echo $row['Room_Number']; ?>&cid=<?php echo $row['resCheckInDate']; ?>&cod=<?php echo $row['resCheckOutDate']; ?>&resid=<?php echo $row['Res_Id']; ?>" class="font-medium text-green-600 dark:text-green-500 hover:underline">Activate</a>
-                            <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
+                            <a href="../Model/deleteRes.php?resid=<?= $row['Res_Id']; ?>" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>
